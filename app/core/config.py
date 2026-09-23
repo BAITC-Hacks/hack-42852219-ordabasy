@@ -32,6 +32,15 @@ class Settings(BaseSettings):
     public_api_base_url: str = "/api"
     analysis_mode: Literal["remote", "mock", "disabled"] = "remote"
 
+    # Read from the bare OPENAI_API_KEY env var (no APP_ prefix), matching the
+    # container/runtime convention documented in docs/docker.md.
+    openai_api_key: str = Field(
+        default="",
+        validation_alias=AliasChoices("OPENAI_API_KEY", "APP_OPENAI_API_KEY"),
+    )
+    openai_model: str = "gpt-4o-mini"
+    openai_timeout_seconds: float = 20.0
+
 
 @lru_cache
 def get_settings() -> Settings:

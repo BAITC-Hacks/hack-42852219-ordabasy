@@ -3,6 +3,7 @@ from copy import deepcopy
 import pytest
 from fastapi.testclient import TestClient
 
+from app.core.config import get_settings
 from app.modules.simulations.dependencies import get_simulation_service
 from app.modules.simulations.schemas import ScenarioRequest
 
@@ -129,9 +130,16 @@ def test_ai_handoff_reuses_validated_engine_and_keeps_version(client: TestClient
     assert context["scenarioVersion"] == "reference-v1"
 
 
-def test_ai_unavailable_does_not_prevent_simulation(client: TestClient) -> None:
-    assert client.post("/api/analysis", json=REFERENCE).status_code == 404
-    assert client.post("/api/simulate", json=REFERENCE).status_code == 200
+def test_ai_unavailable_does_not_prevent_simulation(client: TestClient, monkeypatch) -> None:
+    # Simulate no OpenAI key configured, regardless of the developer's local .env.
+    monkeypatch.setenv("OPENAI_API_KEY", "")
+    monkeypatch.setenv("APP_ANALYSIS_MODE", "disabled")
+    get_settings.cache_clear()
+    try:
+        assert client.post("/api/analysis", json=REFERENCE).status_code == 404
+        assert client.post("/api/simulate", json=REFERENCE).status_code == 200
+    finally:
+        get_settings.cache_clear()
 
 
 def test_legacy_calculation_route_uses_same_engine(client: TestClient) -> None:

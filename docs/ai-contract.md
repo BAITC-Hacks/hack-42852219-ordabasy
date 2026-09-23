@@ -7,9 +7,11 @@
 
 ## Вход публичного обработчика
 
-Напарник реализует **POST /api/analysis** в этом же FastAPI-приложении. Сейчас
-маршрут намеренно не зарегистрирован: UI показывает недоступность AI и позволяет
-повторить запрос, а результаты расчёта остаются доступны.
+**POST /api/analysis** реализован в `app/modules/simulations/public_router.py`
+и использует `app/modules/analysis/` (system prompt, вызов OpenAI Structured
+Outputs, проверка чисел, повтор один раз). При `APP_ANALYSIS_MODE != "remote"`
+или пустом `OPENAI_API_KEY` маршрут отвечает 404: UI показывает недоступность
+AI и позволяет повторить запрос, а результаты расчёта остаются доступны.
 
 Тело такое же, как у `/api/simulate`: `scenarioVersion` (строка) и `decisions`
 (массив объектов `initiativeId`, `districtId`). Городская мера получает null или
@@ -66,13 +68,15 @@ UI отправляет новый scenarioVersion после изменения
 
 `OPENAI_API_KEY` передаётся контейнеру во время запуска. Не добавляйте его в JS,
 `APP_PUBLIC_API_BASE_URL`, ответы `/api/config`, образ или логи. Расчётный API
-запускается без ключа. Модель/SDK и сетевые запросы подключает напарник.
+запускается без ключа. Запрос к OpenAI делается через stdlib `urllib` (без SDK),
+Chat Completions с `response_format: json_schema` (strict), модель — `APP_OPENAI_MODEL`
+(по умолчанию `gpt-4o-mini`).
 
-`APP_ANALYSIS_MODE=remote` — обычный режим (обработчик пока у напарника).
+`APP_ANALYSIS_MODE=remote` — обычный режим, вызывает OpenAI.
 `mock` — явно обозначенный демонстрационный frontend-адаптер, без LLM-запросов.
 `disabled` — анализ отключён, расчёт доступен.
 
 Существующий `app/modules/ai_analysis/` сохранён без изменений. Его старый маршрут
 `/api/v1/ai-analysis` использует несовместимые initiative_ids и возвращает
-контролируемую ошибку миграции `legacy_request`. Переведите его на ScenarioRequest
-и подключите новый `/api/analysis`; прежнюю формулу восстанавливать не нужно.
+контролируемую ошибку миграции `legacy_request` — он не связан с новым
+`/api/analysis` и прежнюю формулу восстанавливать не нужно.
