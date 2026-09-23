@@ -18,6 +18,20 @@ services:
     init: true
     restart: unless-stopped
 
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        # Baked into the client bundle at build time: must be reachable from
+        # the user's browser, not the Docker-internal "backend" hostname.
+        NEXT_PUBLIC_API_MODE: ${NEXT_PUBLIC_API_MODE:-live}
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://localhost:8000}
+    ports:
+      - "${FRONTEND_HOST:-127.0.0.1}:${FRONTEND_PORT:-3000}:3000"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
   tests:
     profiles: [test]
     build:

@@ -1,0 +1,20 @@
+---
+description: API boundaries, loading states, and checks before finishing
+alwaysApply: true
+---
+
+# Code Quality
+
+UI calls a typed function from the slice `api` module. URLs, headers, method, and serialization stay in `shared/api` and that module.
+
+Handle loading and error states for async UI.
+
+Use descriptive names. Do not duplicate logic. Do not leave `console.log` or dead code. Keep secrets out of client code.
+
+Do not add a dependency, a store, or an abstraction unless the current task needs it.
+
+Before finishing:
+
+1. `npm run typecheck`
+2. `npm run lint`
+3. Fix errors caused by your changes.
