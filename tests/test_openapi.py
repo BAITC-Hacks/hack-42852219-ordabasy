@@ -7,6 +7,7 @@ def test_required_paths_are_documented(client: TestClient) -> None:
     assert {
         "/api/bootstrap",
         "/api/simulate",
+        "/api/analysis",
         "/api/validate",
         "/api/config",
         "/api/health",

@@ -48,13 +48,15 @@ docker compose stop backend
 | `APP_PUBLIC_API_BASE_URL` | `/api` | Адрес API, доступный браузеру |
 | `APP_CORS_ORIGINS` | JSON-массив localhost/127.0.0.1 с портами 3000 и 5173 | Разрешённые источники отдельного frontend |
 | `APP_ANALYSIS_MODE` | `remote` | `remote`, демонстрационный `mock` или `disabled` |
+| `APP_OPENAI_MODEL` | `gpt-4o-mini` | Модель OpenAI для `POST /api/analysis` |
 | `APP_HOST` | `127.0.0.1` | Интерфейс публикации порта на компьютере |
 | `APP_PORT` | `8000` | Опубликованный порт на компьютере |
-| `OPENAI_API_KEY` | пустая строка | Только для будущего backend-модуля напарника |
+| `OPENAI_API_KEY` | пустая строка | Ключ для `POST /api/analysis` (режим `remote`) |
 
 Бюджет 100 и число решений 5 — фиксированные правила датасета, не параметры
 окружения. `OPENAI_API_KEY` не требуется для расчёта и не используется во время
-сборки. `.env`, вложенные `.env.*`, ключи и сертификаты исключены из Docker
+сборки. Без ключа или при `APP_ANALYSIS_MODE` не `remote` маршрут
+`POST /api/analysis` отвечает 404, а расчёт остаётся полностью доступен. `.env`, вложенные `.env.*`, ключи и сертификаты исключены из Docker
 build context; runtime-образ копирует только зависимости, `app/` и `web/`.
 Реальные `.env` исключены из Git. Не публикуйте вывод `docker compose config`
 без `--quiet`, если в окружении настроен ключ: Compose может раскрыть его
