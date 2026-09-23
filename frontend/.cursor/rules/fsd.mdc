@@ -1,0 +1,42 @@
+---
+description: Lightweight Feature-Sliced Design layers and import direction
+alwaysApply: true
+---
+
+# Feature-Sliced Design
+
+`src/app` is the Next.js router and composition layer. `src/views` is the FSD screen layer.
+
+Do not create `pages/` or `src/pages`. Next.js treats that directory as the Pages Router, and `next build` fails.
+
+Dependency direction, top to bottom:
+
+`app` → `views` → `widgets` → `features` → `entities` → `shared`
+
+Import only from layers below. Never import upward.
+
+- `app` — routes, layout, providers, global CSS. Keep route files thin.
+- `views` — screens that compose widgets and features.
+- `widgets` — large page sections.
+- `features` — user actions (`upload-document`). Not generic UI (`button`).
+- `entities` — business nouns, their types, and entity UI.
+- `shared` — code that does not know the product (`ui`, API client, `lib`).
+
+Public API only:
+
+```ts
+import { DashboardPage } from "@/views/dashboard";
+```
+
+Do not import `@/features/upload-document/ui/UploadDocument`.
+
+Add `api`, `model`, or `ui` inside a slice only when that code exists. Do not scaffold empty folders.
+
+```tsx
+// src/app/dashboard/page.tsx
+import { DashboardPage } from "@/views/dashboard";
+
+export default function Page() {
+  return <DashboardPage />;
+}
+```
