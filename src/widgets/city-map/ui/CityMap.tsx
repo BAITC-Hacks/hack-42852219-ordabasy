@@ -10,7 +10,7 @@ const LeafletCityMap = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="grid min-h-[400px] place-items-center rounded-3xl bg-[#e9efed] text-sm font-semibold text-slate-500 ring-1 ring-inset ring-slate-200">
+      <div className="grid min-h-[400px] self-stretch place-items-center rounded-3xl bg-[#e9efed] text-sm font-semibold text-slate-500 ring-1 ring-inset ring-slate-200">
         Загружаем карту Астаны...
       </div>
     ),

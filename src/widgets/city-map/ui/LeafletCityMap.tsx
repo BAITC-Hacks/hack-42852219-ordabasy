@@ -65,7 +65,7 @@ export function LeafletCityMap({
   return (
     <section
       aria-label="Карта районов Астаны"
-      className="relative min-h-[400px] overflow-hidden rounded-3xl bg-[#e9efed] shadow-[0_12px_32px_rgba(15,23,42,0.07)] ring-1 ring-inset ring-slate-200/90"
+      className="relative min-h-[400px] self-stretch overflow-hidden rounded-3xl bg-[#e9efed] shadow-[0_12px_32px_rgba(15,23,42,0.07)] ring-1 ring-inset ring-slate-200/90"
     >
       <MapContainer
         bounds={ASTANA_MAP_BOUNDS}
