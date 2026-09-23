@@ -14,22 +14,94 @@ import {
   type District,
 } from "@/entities/district";
 
+export type DistrictPanelScope = "district" | "city";
+
 interface DistrictPanelProps {
-  district: District;
+  district: District | null;
+  scope: DistrictPanelScope;
+  onScopeChange: (scope: DistrictPanelScope) => void;
   onOpenInitiatives: () => void;
 }
 
 const CATEGORIES = Object.keys(CATEGORY_LABELS) as DevelopmentCategory[];
 
+function ScopeTabs({
+  scope,
+  onScopeChange,
+}: {
+  scope: DistrictPanelScope;
+  onScopeChange: (scope: DistrictPanelScope) => void;
+}) {
+  return (
+    <div
+      role="tablist"
+      aria-label="Цель решения"
+      className="mb-4 inline-flex rounded-full border border-slate-200 bg-slate-50 p-1"
+    >
+      {(
+        [
+          { id: "district", label: "Район" },
+          { id: "city", label: "Весь город" },
+        ] as const
+      ).map(({ id, label }) => (
+        <button
+          key={id}
+          type="button"
+          role="tab"
+          aria-selected={scope === id}
+          onClick={() => onScopeChange(id)}
+          className={`rounded-full px-3.5 py-1.5 text-xs font-black transition ${
+            scope === id
+              ? "bg-slate-950 text-white shadow-sm"
+              : "text-slate-500 hover:text-slate-800"
+          }`}
+        >
+          {label}
+        </button>
+      ))}
+    </div>
+  );
+}
+
 export function DistrictPanel({
   district,
+  scope,
+  onScopeChange,
   onOpenInitiatives,
 }: DistrictPanelProps) {
   const [showDetails, setShowDetails] = useState(false);
+
+  if (!district) {
+    return (
+      <aside className="self-start rounded-3xl border border-slate-200/80 bg-white p-5 shadow-[0_12px_32px_rgba(15,23,42,0.06)]">
+        <ScopeTabs scope={scope} onScopeChange={onScopeChange} />
+        <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-teal-700">
+          Городская мера
+        </p>
+        <h2 className="mt-0.5 text-3xl font-black tracking-tight text-slate-950">
+          Весь город
+        </h2>
+        <p className="mt-2 max-w-sm text-sm font-medium leading-relaxed text-slate-600">
+          Мера применится сразу ко всем пяти районам — район выбирать не
+          нужно.
+        </p>
+        <button
+          type="button"
+          onClick={onOpenInitiatives}
+          aria-label="Принять решение"
+          className="mt-4 w-full rounded-xl bg-teal-700 px-4 py-3 text-sm font-black text-white shadow-[0_8px_18px_rgba(15,118,110,0.22)] transition duration-200 hover:-translate-y-0.5 hover:bg-teal-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-700"
+        >
+          Принять решение <span aria-hidden="true">→</span>
+        </button>
+      </aside>
+    );
+  }
+
   const problems = getDistrictProblems(district);
 
   return (
     <aside className="self-start rounded-3xl border border-slate-200/80 bg-white p-5 shadow-[0_12px_32px_rgba(15,23,42,0.06)]">
+      <ScopeTabs scope={scope} onScopeChange={onScopeChange} />
       <div className="flex items-start justify-between gap-4">
         <div>
           <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-teal-700">

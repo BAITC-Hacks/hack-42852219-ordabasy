@@ -140,9 +140,12 @@ export function validateScenario(
 
 export function getInitiativeDisabledReason(
   initiative: Initiative,
-  districtId: DistrictId,
+  districtId: DistrictId | null,
   decisions: Decision[],
 ): string | null {
+  if (initiative.scope === "DISTRICT" && !districtId) {
+    return "Сначала выберите район на карте";
+  }
   if (hasDecision(decisions, initiative.id)) return "Уже выбрано";
   if (decisions.length >= MAX_DECISIONS) return "Все 5 решений уже выбраны";
 

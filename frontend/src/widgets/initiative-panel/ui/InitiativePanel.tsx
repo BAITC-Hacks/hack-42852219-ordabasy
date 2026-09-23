@@ -13,7 +13,7 @@ import { INITIATIVES, type Initiative } from "@/entities/initiative";
 import { getInitiativeDisabledReason } from "@/features/manage-scenario";
 
 interface InitiativePanelProps {
-  district: District;
+  district: District | null;
   decisions: Decision[];
   onSelect: (initiative: Initiative) => void;
   onClose: () => void;
@@ -57,7 +57,7 @@ export function InitiativePanel({
           <div className="flex items-start justify-between gap-4">
             <div>
               <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-teal-700">
-                Выбран район · {district.name}
+                {district ? `Выбран район · ${district.name}` : "Весь город · все районы сразу"}
               </p>
               <h2
                 id="initiative-title"
@@ -97,7 +97,7 @@ export function InitiativePanel({
           {visibleInitiatives.map((initiative) => {
             const disabledReason = getInitiativeDisabledReason(
               initiative,
-              district.id,
+              district?.id ?? null,
               decisions,
             );
             return (

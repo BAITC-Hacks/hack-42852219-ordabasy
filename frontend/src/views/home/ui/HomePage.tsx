@@ -23,7 +23,10 @@ import { AIAnalysisPanel } from "@/widgets/ai-analysis";
 import { CityHeader } from "@/widgets/city-header";
 import { CityMap } from "@/widgets/city-map";
 import { DecisionProgress } from "@/widgets/decision-progress";
-import { DistrictPanel } from "@/widgets/district-panel";
+import {
+  DistrictPanel,
+  type DistrictPanelScope,
+} from "@/widgets/district-panel";
 import { InitiativePanel } from "@/widgets/initiative-panel";
 import {
   ResultDistrictComparison,
@@ -53,8 +56,9 @@ export function HomePage({
   services = DEFAULT_SERVICES,
   timelineDelayMs = 1200,
 }: HomePageProps = {}) {
-  const [selectedDistrictId, setSelectedDistrictId] =
+  const [focusedDistrictId, setFocusedDistrictId] =
     useState<DistrictId>("NURA");
+  const [scope, setScope] = useState<DistrictPanelScope>("district");
   const [decisions, setDecisions] = useState<Decision[]>([]);
   const [initiativePanelOpen, setInitiativePanelOpen] = useState(false);
   const [status, setStatus] = useState<SimulationStatus>("planning");
@@ -66,7 +70,8 @@ export function HomePage({
   const [simulationError, setSimulationError] = useState<string | null>(null);
   const [mapMoment, setMapMoment] = useState<MapMoment>("after");
 
-  const selectedDistrict = getDistrict(selectedDistrictId);
+  const focusedDistrict = getDistrict(focusedDistrictId);
+  const selectedDistrict = scope === "city" ? null : focusedDistrict;
   const metrics = useMemo(() => getScenarioMetrics(decisions), [decisions]);
   const scenarioErrors = useMemo(
     () => validateScenario(decisions),
@@ -84,10 +89,15 @@ export function HomePage({
       {
         measureId: initiative.id,
         districtId:
-          initiative.scope === "CITY" ? null : selectedDistrictId,
+          initiative.scope === "CITY" ? null : focusedDistrictId,
       },
     ]);
     setInitiativePanelOpen(false);
+  }
+
+  function selectDistrict(districtId: DistrictId) {
+    setFocusedDistrictId(districtId);
+    setScope("district");
   }
 
   function removeDecision(index: number) {
@@ -137,7 +147,8 @@ export function HomePage({
     setAnalysisFailed(false);
     setSimulationError(null);
     setMapMoment("after");
-    setSelectedDistrictId("NURA");
+    setFocusedDistrictId("NURA");
+    setScope("district");
     setStatus("planning");
   }
 
@@ -208,8 +219,8 @@ export function HomePage({
                 </div>
               </div>
               <CityMap
-                selectedDistrictId={selectedDistrictId}
-                onSelectDistrict={setSelectedDistrictId}
+                selectedDistrictId={focusedDistrictId}
+                onSelectDistrict={setFocusedDistrictId}
                 scores={resultScores}
                 indicators={resultIndicators}
                 criticalCounts={resultCriticalCounts}
@@ -222,7 +233,7 @@ export function HomePage({
             </div>
             <ResultDistrictComparison
               result={simulationResult}
-              districtId={selectedDistrictId}
+              districtId={focusedDistrictId}
               moment={mapMoment}
             />
           </section>
@@ -256,12 +267,15 @@ export function HomePage({
       <main className="mx-auto max-w-[1600px] space-y-3 p-4 md:px-6 md:py-4">
         <div className="grid items-start gap-3 lg:grid-cols-[minmax(0,1.65fr)_minmax(350px,0.7fr)]">
           <CityMap
-            selectedDistrictId={selectedDistrictId}
-            onSelectDistrict={setSelectedDistrictId}
+            selectedDistrictId={focusedDistrictId}
+            onSelectDistrict={selectDistrict}
             markerDistrictIds={markerDistrictIds}
+            highlightAll={scope === "city"}
           />
           <DistrictPanel
             district={selectedDistrict}
+            scope={scope}
+            onScopeChange={setScope}
             onOpenInitiatives={() => setInitiativePanelOpen(true)}
           />
         </div>

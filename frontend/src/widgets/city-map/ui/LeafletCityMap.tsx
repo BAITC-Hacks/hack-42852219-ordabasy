@@ -44,6 +44,7 @@ export function LeafletCityMap({
   markerDistrictIds = [],
   criticalCounts,
   cityCriticalCount,
+  highlightAll = false,
 }: CityMapProps) {
   const [hoveredDistrictId, setHoveredDistrictId] = useState<string | null>(
     null,
@@ -85,7 +86,7 @@ export function LeafletCityMap({
           <InteractiveDistrict
             key={geography.id}
             geography={geography}
-            selected={selectedDistrictId === geography.id}
+            selected={highlightAll || selectedDistrictId === geography.id}
             hovered={hoveredDistrictId === geography.id}
             layer={layer}
             score={scores?.[geography.id]}

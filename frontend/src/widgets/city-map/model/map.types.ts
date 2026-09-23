@@ -11,4 +11,6 @@ export interface CityMapProps {
   markerDistrictIds?: DistrictId[];
   criticalCounts?: Partial<Record<DistrictId, number>>;
   cityCriticalCount?: number;
+  /** Highlights every district at once, for a city-wide measure that isn't tied to one district. */
+  highlightAll?: boolean;
 }

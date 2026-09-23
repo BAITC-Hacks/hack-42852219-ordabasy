@@ -116,6 +116,44 @@ describe("HomePage simulator", () => {
     expect(await screen.findByText("Расчёт выполнен движком.")).toBeDefined();
   });
 
+  it("adds a city-wide decision from the 'Весь город' tab without selecting a district", async () => {
+    const user = userEvent.setup();
+    render(<HomePage />);
+
+    await user.click(screen.getByRole("tab", { name: "Весь город" }));
+    expect(
+      screen.getByRole("heading", { name: "Весь город" }),
+    ).toBeDefined();
+
+    await selectInitiative("Единая цифровая платформа обращений");
+
+    const decisionCard = screen.getByText("Решение 1").closest("li");
+    if (!decisionCard) throw new Error("Decision card not found");
+    expect(within(decisionCard).getByText("Весь город")).toBeDefined();
+    expect(screen.getByText("86 / 100")).toBeDefined();
+  });
+
+  it("disables district-only initiatives while in city scope", async () => {
+    const user = userEvent.setup();
+    render(<HomePage />);
+
+    await user.click(screen.getByRole("tab", { name: "Весь город" }));
+    await user.click(
+      screen.getByRole("button", { name: "Принять решение" }),
+    );
+    const heading = screen.getByRole("heading", {
+      name: "Выделенные полосы для автобусов",
+    });
+    const card = heading.closest("article");
+    if (!card) throw new Error("Initiative card not found");
+    expect(
+      within(card).getByRole("button", { name: "Выбрать" }).hasAttribute(
+        "disabled",
+      ),
+    ).toBe(true);
+    expect(within(card).getByText("Сначала выберите район на карте")).toBeDefined();
+  });
+
   it("keeps calculated results visible when AI analysis fails", async () => {
     const simulate = vi.fn().mockResolvedValue(resultFixture);
     const analyze = vi.fn().mockRejectedValue(new Error("AI offline"));
