@@ -69,7 +69,7 @@ export function SimulationResults({ result }: SimulationResultsProps) {
         />
       </dl>
 
-      <section className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
+      <section className="rounded-3xl bg-white p-5 shadow-[0_12px_32px_rgba(15,23,42,0.06)] ring-1 ring-inset ring-slate-200/80">
         <div>
           <p className="text-xs font-bold uppercase tracking-[0.18em] text-teal-700">
             До → После
@@ -96,7 +96,7 @@ export function SimulationResults({ result }: SimulationResultsProps) {
             return (
               <article
                 key={district.id}
-                className="rounded-2xl border border-slate-200 bg-slate-50 p-4"
+                className="rounded-2xl bg-slate-50 p-4"
               >
                 <div className="flex items-center justify-between">
                   <h3 className="font-black text-slate-950">{district.name}</h3>
@@ -117,7 +117,11 @@ export function SimulationResults({ result }: SimulationResultsProps) {
                         </span>
                         <span className="font-bold tabular-nums text-slate-950">
                           {before.toFixed(1)} → {after.toFixed(1)}{" "}
-                          <em className="not-italic text-emerald-700">
+                          <em
+                            className={`not-italic ${
+                              delta > 0 ? "text-emerald-700" : "text-red-700"
+                            }`}
+                          >
                             ({delta > 0 ? "+" : ""}
                             {delta.toFixed(1)})
                           </em>
@@ -149,14 +153,14 @@ function ResultMetric({
   detail: string;
 }) {
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+    <div className="rounded-2xl bg-white p-4 shadow-sm ring-1 ring-inset ring-slate-200/80">
       <dt className="text-xs font-bold uppercase tracking-wider text-slate-500">
         {label}
       </dt>
       <dd className="mt-2 text-2xl font-black tabular-nums text-slate-950">
         {value}
       </dd>
-      <p className="mt-1 truncate text-xs text-slate-500" title={detail}>
+      <p className="mt-1 text-xs leading-snug text-slate-500" title={detail}>
         {detail}
       </p>
     </div>

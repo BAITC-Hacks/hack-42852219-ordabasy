@@ -48,6 +48,41 @@ export type QoLSeverity =
   | "GOOD"
   | "EXCELLENT";
 
+export const QOL_SEVERITY_PRESENTATION: Record<
+  QoLSeverity,
+  {
+    label: string;
+    fill: string;
+    barClass: string;
+    textClass: string;
+  }
+> = {
+  CRITICAL: {
+    label: "Критично",
+    fill: "#d86f64",
+    barClass: "bg-rose-500",
+    textClass: "text-rose-700",
+  },
+  NEEDS_ATTENTION: {
+    label: "Требует внимания",
+    fill: "#e4ad4f",
+    barClass: "bg-amber-500",
+    textClass: "text-amber-700",
+  },
+  GOOD: {
+    label: "Хорошо",
+    fill: "#57aa8f",
+    barClass: "bg-teal-600",
+    textClass: "text-teal-700",
+  },
+  EXCELLENT: {
+    label: "Отлично",
+    fill: "#267d6b",
+    barClass: "bg-emerald-700",
+    textClass: "text-emerald-800",
+  },
+};
+
 export const INDICATOR_LABELS: Record<IndicatorCode, string> = {
   T1: "Разгрузка дорог",
   T2: "Доступность общественного транспорта",
@@ -156,6 +191,12 @@ export function getQoLSeverity(score: number): QoLSeverity {
   if (score < 60) return "NEEDS_ATTENTION";
   if (score < 80) return "GOOD";
   return "EXCELLENT";
+}
+
+export function getCriticalIndicatorCount(
+  indicators: DistrictIndicators,
+): number {
+  return Object.values(indicators).filter((value) => value < 40).length;
 }
 
 export function getCategoryValue(

@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 
 import type { Decision } from "@/entities/decision";
 import {
+  getCriticalIndicatorCount,
   getDistrict,
   type DistrictId,
 } from "@/entities/district";
@@ -24,7 +25,10 @@ import { CityMap } from "@/widgets/city-map";
 import { DecisionProgress } from "@/widgets/decision-progress";
 import { DistrictPanel } from "@/widgets/district-panel";
 import { InitiativePanel } from "@/widgets/initiative-panel";
-import { SimulationResults } from "@/widgets/simulation-results";
+import {
+  ResultDistrictComparison,
+  SimulationResults,
+} from "@/widgets/simulation-results";
 import { SimulationTimeline } from "@/widgets/simulation-timeline";
 
 type SimulationStatus = "planning" | "simulating" | "results";
@@ -152,6 +156,24 @@ export function HomePage({
         mapMoment === "before" ? district.beforeScore : district.afterScore,
       ]),
     );
+    const resultCriticalCounts = Object.fromEntries(
+      simulationResult.districts.map((district) => [
+        district.districtId,
+        getCriticalIndicatorCount(
+          mapMoment === "before"
+            ? district.beforeIndicators
+            : district.afterIndicators,
+        ),
+      ]),
+    );
+    const resultIndicators = Object.fromEntries(
+      simulationResult.districts.map((district) => [
+        district.districtId,
+        mapMoment === "before"
+          ? district.beforeIndicators
+          : district.afterIndicators,
+      ]),
+    );
 
     return (
       <div className="min-h-screen bg-[#f2f6f5]">
@@ -189,14 +211,26 @@ export function HomePage({
                 selectedDistrictId={selectedDistrictId}
                 onSelectDistrict={setSelectedDistrictId}
                 scores={resultScores}
+                indicators={resultIndicators}
+                criticalCounts={resultCriticalCounts}
+                cityCriticalCount={
+                  mapMoment === "before"
+                    ? simulationResult.criticalBefore
+                    : simulationResult.criticalAfter
+                }
               />
             </div>
-            <AIAnalysisPanel
-              analysis={analysis}
-              loading={analysisLoading}
-              failed={analysisFailed}
+            <ResultDistrictComparison
+              result={simulationResult}
+              districtId={selectedDistrictId}
+              moment={mapMoment}
             />
           </section>
+          <AIAnalysisPanel
+            analysis={analysis}
+            loading={analysisLoading}
+            failed={analysisFailed}
+          />
           <div className="flex justify-center py-3">
             <button
               type="button"
@@ -219,8 +253,8 @@ export function HomePage({
         budgetRemaining={metrics.budgetRemaining}
         decisionCount={decisions.length}
       />
-      <main className="mx-auto max-w-[1600px] space-y-4 p-4 md:p-6 lg:p-8">
-        <div className="grid gap-4 lg:grid-cols-[minmax(0,1.65fr)_minmax(330px,0.7fr)]">
+      <main className="mx-auto max-w-[1600px] space-y-3 p-4 md:px-6 md:py-4">
+        <div className="grid items-start gap-3 lg:grid-cols-[minmax(0,1.65fr)_minmax(350px,0.7fr)]">
           <CityMap
             selectedDistrictId={selectedDistrictId}
             onSelectDistrict={setSelectedDistrictId}
@@ -234,32 +268,57 @@ export function HomePage({
 
         <DecisionProgress decisions={decisions} onRemove={removeDecision} />
 
-        <section className="flex flex-col items-center justify-between gap-3 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:flex-row">
-          <div className="w-full max-w-sm">
-            <div className="flex justify-between text-xs font-bold text-slate-600">
-              <span>Осталось {metrics.budgetRemaining} ед.</span>
-              <span>{metrics.budgetUsed} ед. использовано</span>
+        <section className="flex flex-col items-center justify-between gap-4 rounded-2xl bg-white p-4 shadow-[0_10px_28px_rgba(15,23,42,0.05)] ring-1 ring-inset ring-slate-200/80 sm:flex-row">
+          <div className="w-full max-w-lg">
+            <div className="flex items-end justify-between gap-3">
+              <div>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-400">
+                  Бюджет сценария
+                </p>
+                <p
+                  className={`mt-0.5 text-lg font-black tabular-nums ${
+                    metrics.budgetRemaining <= 10
+                      ? "text-amber-700"
+                      : "text-slate-950"
+                  }`}
+                >
+                  Осталось {metrics.budgetRemaining} ед.
+                </p>
+              </div>
+              <span className="pb-0.5 text-xs font-medium text-slate-500">
+                Использовано {metrics.budgetUsed} ед.
+              </span>
             </div>
-            <div className="mt-2 h-2 overflow-hidden rounded-full bg-slate-100">
+            <div className="mt-2 h-3 overflow-hidden rounded-full bg-slate-100 ring-1 ring-inset ring-slate-200/60">
               <div
-                className="h-full rounded-full bg-teal-600 transition-[width] duration-300"
+                className={`h-full rounded-full transition-[width,background-color] duration-300 ${
+                  metrics.budgetRemaining <= 10
+                    ? "bg-amber-500"
+                    : "bg-teal-600"
+                }`}
                 style={{ width: `${metrics.budgetUsed}%` }}
               />
             </div>
+            {metrics.budgetRemaining <= 10 && (
+              <p className="mt-1.5 text-xs font-semibold text-amber-700">
+                Осталось только {metrics.budgetRemaining} ед.
+              </p>
+            )}
           </div>
-          <div className="text-center sm:text-right">
+          <div className="min-w-64 text-center sm:text-right">
             <button
               type="button"
               disabled={!canSimulate}
               onClick={runSimulation}
-              className="rounded-xl bg-slate-950 px-6 py-3 text-sm font-black text-white shadow-sm hover:bg-teal-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-950 disabled:cursor-not-allowed disabled:bg-slate-300"
+              aria-label="Запустить симуляцию"
+              className="w-full rounded-xl bg-slate-950 px-6 py-3 text-sm font-black text-white shadow-[0_8px_20px_rgba(15,23,42,0.2)] transition duration-200 hover:-translate-y-0.5 hover:bg-teal-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-950 disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-500 disabled:shadow-none"
             >
-              Запустить симуляцию
+              Запустить симуляцию <span aria-hidden="true">→</span>
             </button>
             {!canSimulate && (
-              <p className="mt-1 text-xs font-semibold text-slate-500">
+              <p className="mt-1.5 text-xs font-medium text-slate-500">
                 {missingDecisions > 0
-                  ? `Выберите ещё ${missingDecisions} ${decisionWord(missingDecisions)}`
+                  ? `Нужно принять ещё ${missingDecisions} ${decisionWord(missingDecisions)}`
                   : scenarioErrors[0]?.message}
               </p>
             )}
