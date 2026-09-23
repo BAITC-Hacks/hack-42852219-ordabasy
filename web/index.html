@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#2459df">
+  <!-- For a separate frontend host, use its browser-accessible API URL, e.g. http://localhost:8000/api. -->
+  <meta name="api-base-url" content="">
+  <title>Аким на 5 часов — симулятор Астаны</title>
+  <link rel="stylesheet" href="/static/styles.css">
+  <script type="module" src="/static/app.js"></script>
+</head>
+<body>
+  <div id="app"><div class="boot-screen"><div class="brand-mark">А</div><h1>Аким на 5 часов</h1><p>Загружаем исходные данные города…</p></div></div>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+  <dialog id="decision-dialog" aria-labelledby="decision-title"></dialog>
+  <dialog id="results-dialog" class="results-dialog" aria-labelledby="results-title"></dialog>
+</body>
+</html>
