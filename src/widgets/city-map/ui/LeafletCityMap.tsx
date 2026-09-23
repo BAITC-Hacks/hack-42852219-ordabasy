@@ -12,6 +12,7 @@ import {
   Polygon,
   TileLayer,
   Tooltip,
+  useMap,
 } from "react-leaflet";
 
 import {
@@ -68,8 +69,8 @@ export function LeafletCityMap({
     >
       <MapContainer
         bounds={ASTANA_MAP_BOUNDS}
-        boundsOptions={{ padding: [12, 12] }}
-        minZoom={10}
+        boundsOptions={{ padding: [24, 24] }}
+        minZoom={9}
         maxZoom={16}
         scrollWheelZoom
         zoomControl
@@ -101,6 +102,7 @@ export function LeafletCityMap({
             }
           />
         ))}
+        <MapViewportControl />
       </MapContainer>
 
       <div className="absolute left-16 top-4 z-[500]">
@@ -220,9 +222,10 @@ function InteractiveDistrict({
       `${district.name}, качество жизни ${visibleScore.toFixed(2)}, ${layerLabel}: ${value.toFixed(1)}`,
     );
 
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Enter" || event.key === " ") {
-        event.preventDefault();
+    const handleKeyDown = (event: Event) => {
+      const keyboardEvent = event as KeyboardEvent;
+      if (keyboardEvent.key === "Enter" || keyboardEvent.key === " ") {
+        keyboardEvent.preventDefault();
         onSelect();
       }
     };
@@ -251,27 +254,29 @@ function InteractiveDistrict({
         }}
       >
         <Tooltip sticky direction="top" className="gis-district-tooltip">
-          <div className="min-w-48 p-1">
-            <p className="text-[11px] font-black uppercase tracking-[0.14em] text-teal-800">
-              {district.name}
-            </p>
-            <div className="mt-2 flex gap-6">
-              <TooltipMetric
-                label="Quality of Life"
-                value={visibleScore.toFixed(2)}
-              />
-              {layer !== "QOL" && (
-                <TooltipMetric
-                  label={layerLabel}
-                  value={value.toFixed(1)}
-                />
-              )}
+          <div className="w-36">
+            <div className="flex items-center justify-between gap-3">
+              <p className="text-[10px] font-black uppercase tracking-[0.12em] text-teal-800">
+                {district.name}
+              </p>
+              <strong className="text-sm font-black tabular-nums text-slate-950">
+                {visibleScore.toFixed(2)}
+              </strong>
             </div>
-            <p className="mt-2 border-t border-slate-100 pt-2 text-[10px] leading-relaxed text-slate-600">
-              {district.keyProblem}
-            </p>
-            <p className="mt-1 text-[10px] font-semibold text-amber-700">
-              Критических показателей: {resolvedCriticalCount}
+            {layer !== "QOL" && (
+              <p className="mt-1 text-[9px] font-semibold text-slate-500">
+                {layerLabel}:{" "}
+                <strong className="text-slate-800">{value.toFixed(1)}</strong>
+              </p>
+            )}
+            <p
+              className={`mt-1 text-[9px] font-semibold ${
+                resolvedCriticalCount > 0
+                  ? "text-amber-700"
+                  : "text-slate-400"
+              }`}
+            >
+              {resolvedCriticalCount} крит.
             </p>
           </div>
         </Tooltip>
@@ -286,16 +291,46 @@ function InteractiveDistrict({
   );
 }
 
-function TooltipMetric({ label, value }: { label: string; value: string }) {
+function MapViewportControl() {
+  const map = useMap();
+
+  useEffect(() => {
+    const fitWholeCity = () => {
+      map.invalidateSize({ pan: false });
+      map.fitBounds(ASTANA_MAP_BOUNDS, {
+        padding: [24, 24],
+        maxZoom: 11,
+        animate: false,
+      });
+    };
+    const frame = window.requestAnimationFrame(fitWholeCity);
+    const timer = window.setTimeout(fitWholeCity, 180);
+
+    return () => {
+      window.cancelAnimationFrame(frame);
+      window.clearTimeout(timer);
+    };
+  }, [map]);
+
   return (
-    <div>
-      <span className="block text-[9px] font-bold uppercase tracking-wide text-slate-400">
-        {label}
-      </span>
-      <strong className="block text-lg font-black tabular-nums text-slate-950">
-        {value}
-      </strong>
-    </div>
+    <button
+      type="button"
+      aria-label="Показать всю карту Астаны"
+      title="Показать весь город"
+      onMouseDown={(event) => event.stopPropagation()}
+      onClick={(event) => {
+        event.stopPropagation();
+        map.invalidateSize({ pan: false });
+        map.fitBounds(ASTANA_MAP_BOUNDS, {
+          padding: [24, 24],
+          maxZoom: 11,
+          animate: true,
+        });
+      }}
+      className="absolute left-4 top-24 z-[500] rounded-lg bg-white/95 px-2.5 py-2 text-[10px] font-bold text-slate-700 shadow-sm ring-1 ring-slate-200 hover:bg-white"
+    >
+      ⛶ Весь город
+    </button>
   );
 }
 

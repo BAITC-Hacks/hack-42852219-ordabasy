@@ -15,13 +15,13 @@ describe("CityMap", () => {
       />,
     );
 
-    const nura = screen.getByRole("button", {
+    const nura = await screen.findByRole("button", {
       name: /Нура, качество жизни 49.18/,
     });
     expect(nura.getAttribute("aria-pressed")).toBe("true");
 
     await user.click(
-      screen.getByRole("button", {
+      await screen.findByRole("button", {
         name: /Есиль, качество жизни 62.99/,
       }),
     );
@@ -35,13 +35,13 @@ describe("CityMap", () => {
     );
 
     await user.hover(
-      screen.getByRole("button", {
+      await screen.findByRole("button", {
         name: /Нура, качество жизни 49.18/,
       }),
     );
 
-    expect(screen.getByText("Quality of Life")).toBeDefined();
-    expect(screen.getByText("Критических показателей")).toBeDefined();
+    expect(screen.getByText("49.18")).toBeDefined();
+    expect(screen.getByText("2 крит.")).toBeDefined();
   });
 
   it("maps the social layer to Nura's 36.5 presentation value", async () => {
@@ -51,7 +51,7 @@ describe("CityMap", () => {
     );
 
     await user.selectOptions(
-      screen.getByRole("combobox", { name: "Слой карты" }),
+      await screen.findByRole("combobox", { name: "Слой карты" }),
       "SOCIAL",
     );
 

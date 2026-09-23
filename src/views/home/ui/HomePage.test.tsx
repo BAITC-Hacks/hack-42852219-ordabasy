@@ -54,7 +54,7 @@ async function createOfficialScenario() {
   await selectInitiative("Единая цифровая платформа обращений");
   const user = userEvent.setup();
   await user.click(
-    screen.getByRole("button", {
+    await screen.findByRole("button", {
       name: /Сарыарка, качество жизни 54.65/,
     }),
   );
@@ -67,7 +67,9 @@ describe("HomePage simulator", () => {
     render(<HomePage />);
 
     await user.click(
-      screen.getByRole("button", { name: /Есиль, качество жизни 62.99/ }),
+      await screen.findByRole("button", {
+        name: /Есиль, качество жизни 62.99/,
+      }),
     );
     expect(
       screen.getByRole("heading", { name: "Есиль", level: 2 }),
