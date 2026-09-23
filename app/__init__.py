@@ -1,0 +1,2 @@
+"""AstanaInnovation application package."""
+
