@@ -1,0 +1,82 @@
+[
+  {
+    "id": "smart-traffic",
+    "name": "Умное управление трафиком",
+    "description": "Адаптивные светофоры и единый центр транспортных данных.",
+    "cost": 24,
+    "impacts": {"mobility": 9, "environment": 2, "health": 0, "safety": 3, "economy": 2},
+    "incompatible_with": ["free-city-parking"]
+  },
+  {
+    "id": "bus-electrification",
+    "name": "Электрификация автобусного парка",
+    "description": "Замена части городских автобусов электрическими.",
+    "cost": 28,
+    "impacts": {"mobility": 4, "environment": 8, "health": 3, "safety": 1, "economy": 1},
+    "incompatible_with": []
+  },
+  {
+    "id": "green-corridors",
+    "name": "Зелёные коридоры",
+    "description": "Озеленение улиц и соединение парков пешеходными маршрутами.",
+    "cost": 18,
+    "impacts": {"mobility": 1, "environment": 8, "health": 4, "safety": 1, "economy": 1},
+    "incompatible_with": ["dense-commercial-zones"]
+  },
+  {
+    "id": "district-clinics",
+    "name": "Цифровые районные клиники",
+    "description": "Телемедицина, электронная очередь и профилактические скрининги.",
+    "cost": 20,
+    "impacts": {"mobility": 1, "environment": 0, "health": 9, "safety": 1, "economy": 2},
+    "incompatible_with": []
+  },
+  {
+    "id": "safe-streets",
+    "name": "Безопасные улицы",
+    "description": "Освещение, безопасные переходы и анализ аварийных участков.",
+    "cost": 16,
+    "impacts": {"mobility": 2, "environment": 0, "health": 1, "safety": 9, "economy": 1},
+    "incompatible_with": []
+  },
+  {
+    "id": "startup-grants",
+    "name": "Гранты городским стартапам",
+    "description": "Конкурсное финансирование решений для городской среды.",
+    "cost": 14,
+    "impacts": {"mobility": 1, "environment": 1, "health": 1, "safety": 0, "economy": 8},
+    "incompatible_with": []
+  },
+  {
+    "id": "school-air-monitoring",
+    "name": "Мониторинг воздуха у школ",
+    "description": "Сеть датчиков и открытые данные о качестве воздуха.",
+    "cost": 10,
+    "impacts": {"mobility": 0, "environment": 5, "health": 4, "safety": 1, "economy": 0},
+    "incompatible_with": []
+  },
+  {
+    "id": "winter-mobility",
+    "name": "Зимняя мобильность",
+    "description": "Приоритетная уборка тротуаров, остановок и веломаршрутов.",
+    "cost": 12,
+    "impacts": {"mobility": 6, "environment": 1, "health": 2, "safety": 4, "economy": 1},
+    "incompatible_with": []
+  },
+  {
+    "id": "free-city-parking",
+    "name": "Бесплатная парковка в центре",
+    "description": "Отмена платы за муниципальные парковки в центральной зоне.",
+    "cost": 8,
+    "impacts": {"mobility": -5, "environment": -4, "health": -1, "safety": 0, "economy": 3},
+    "incompatible_with": ["smart-traffic"]
+  },
+  {
+    "id": "dense-commercial-zones",
+    "name": "Уплотнение коммерческих зон",
+    "description": "Ускоренное выделение участков под крупные торговые объекты.",
+    "cost": 15,
+    "impacts": {"mobility": -3, "environment": -5, "health": -1, "safety": 0, "economy": 7},
+    "incompatible_with": ["green-corridors"]
+  }
+]

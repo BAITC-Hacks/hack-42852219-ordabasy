@@ -1,0 +1,45 @@
+[
+  {
+    "id": "almaty",
+    "name": "Алматы",
+    "population": 390000,
+    "area_km2": 154.7,
+    "indicators": {"mobility": 64, "environment": 57, "health": 68, "safety": 70, "economy": 72}
+  },
+  {
+    "id": "baikonyr",
+    "name": "Байқоңыр",
+    "population": 250000,
+    "area_km2": 181.3,
+    "indicators": {"mobility": 61, "environment": 55, "health": 65, "safety": 66, "economy": 63}
+  },
+  {
+    "id": "esil",
+    "name": "Есіл",
+    "population": 330000,
+    "area_km2": 393.6,
+    "indicators": {"mobility": 70, "environment": 71, "health": 74, "safety": 77, "economy": 82}
+  },
+  {
+    "id": "nura",
+    "name": "Нұра",
+    "population": 170000,
+    "area_km2": 336.2,
+    "indicators": {"mobility": 58, "environment": 68, "health": 66, "safety": 73, "economy": 75}
+  },
+  {
+    "id": "saryarka",
+    "name": "Сарыарқа",
+    "population": 360000,
+    "area_km2": 67.8,
+    "indicators": {"mobility": 62, "environment": 52, "health": 64, "safety": 64, "economy": 67}
+  },
+  {
+    "id": "sarayshyq",
+    "name": "Сарайшық",
+    "population": 210000,
+    "area_km2": 245.4,
+    "indicators": {"mobility": 57, "environment": 63, "health": 62, "safety": 69, "economy": 70}
+  }
+]
+
