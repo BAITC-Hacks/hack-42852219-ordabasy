@@ -1,82 +1,16 @@
 [
-  {
-    "id": "smart-traffic",
-    "name": "Умное управление трафиком",
-    "description": "Адаптивные светофоры и единый центр транспортных данных.",
-    "cost": 24,
-    "impacts": {"mobility": 9, "environment": 2, "health": 0, "safety": 3, "economy": 2},
-    "incompatible_with": ["free-city-parking"]
-  },
-  {
-    "id": "bus-electrification",
-    "name": "Электрификация автобусного парка",
-    "description": "Замена части городских автобусов электрическими.",
-    "cost": 28,
-    "impacts": {"mobility": 4, "environment": 8, "health": 3, "safety": 1, "economy": 1},
-    "incompatible_with": []
-  },
-  {
-    "id": "green-corridors",
-    "name": "Зелёные коридоры",
-    "description": "Озеленение улиц и соединение парков пешеходными маршрутами.",
-    "cost": 18,
-    "impacts": {"mobility": 1, "environment": 8, "health": 4, "safety": 1, "economy": 1},
-    "incompatible_with": ["dense-commercial-zones"]
-  },
-  {
-    "id": "district-clinics",
-    "name": "Цифровые районные клиники",
-    "description": "Телемедицина, электронная очередь и профилактические скрининги.",
-    "cost": 20,
-    "impacts": {"mobility": 1, "environment": 0, "health": 9, "safety": 1, "economy": 2},
-    "incompatible_with": []
-  },
-  {
-    "id": "safe-streets",
-    "name": "Безопасные улицы",
-    "description": "Освещение, безопасные переходы и анализ аварийных участков.",
-    "cost": 16,
-    "impacts": {"mobility": 2, "environment": 0, "health": 1, "safety": 9, "economy": 1},
-    "incompatible_with": []
-  },
-  {
-    "id": "startup-grants",
-    "name": "Гранты городским стартапам",
-    "description": "Конкурсное финансирование решений для городской среды.",
-    "cost": 14,
-    "impacts": {"mobility": 1, "environment": 1, "health": 1, "safety": 0, "economy": 8},
-    "incompatible_with": []
-  },
-  {
-    "id": "school-air-monitoring",
-    "name": "Мониторинг воздуха у школ",
-    "description": "Сеть датчиков и открытые данные о качестве воздуха.",
-    "cost": 10,
-    "impacts": {"mobility": 0, "environment": 5, "health": 4, "safety": 1, "economy": 0},
-    "incompatible_with": []
-  },
-  {
-    "id": "winter-mobility",
-    "name": "Зимняя мобильность",
-    "description": "Приоритетная уборка тротуаров, остановок и веломаршрутов.",
-    "cost": 12,
-    "impacts": {"mobility": 6, "environment": 1, "health": 2, "safety": 4, "economy": 1},
-    "incompatible_with": []
-  },
-  {
-    "id": "free-city-parking",
-    "name": "Бесплатная парковка в центре",
-    "description": "Отмена платы за муниципальные парковки в центральной зоне.",
-    "cost": 8,
-    "impacts": {"mobility": -5, "environment": -4, "health": -1, "safety": 0, "economy": 3},
-    "incompatible_with": ["smart-traffic"]
-  },
-  {
-    "id": "dense-commercial-zones",
-    "name": "Уплотнение коммерческих зон",
-    "description": "Ускоренное выделение участков под крупные торговые объекты.",
-    "cost": 15,
-    "impacts": {"mobility": -3, "environment": -5, "health": -1, "safety": 0, "economy": 7},
-    "incompatible_with": ["green-corridors"]
-  }
+  {"id": "M1", "name": "Выделенные полосы для автобусов", "description": "Приоритет автобусов на дорогах выбранного района.", "category": "transport", "scope": "district", "cost": 18, "lag": 2, "effects": {"T1": 6, "T2": 9}},
+  {"id": "M2", "name": "Умные светофоры", "description": "Адаптивное управление светофорами по всему городу.", "category": "transport", "scope": "city", "cost": 22, "lag": 2, "effects": {"T1": 4, "B2": 3}},
+  {"id": "M3", "name": "Линия ЛРТ / расширение", "description": "Развитие линии легкорельсового транспорта в выбранном районе.", "category": "transport", "scope": "district", "cost": 30, "lag": 4, "effects": {"T1": 16, "T2": 20, "E2": 4}},
+  {"id": "M4", "name": "Парк / сквер", "description": "Создание зелёной общественной территории в районе.", "category": "ecology", "scope": "district", "cost": 15, "lag": 2, "effects": {"E1": 12, "E2": 3, "B1": 2}},
+  {"id": "M5", "name": "Перевод частного сектора на чистое топливо", "description": "Снижение загрязнения воздуха от отопления частного сектора.", "category": "ecology", "scope": "district", "cost": 25, "lag": 3, "effects": {"E2": 14, "C1": 4}},
+  {"id": "M6", "name": "Городская программа озеленения и ветрозащитных полос", "description": "Озеленение и ветрозащитные посадки во всех районах.", "category": "ecology", "scope": "city", "cost": 20, "lag": 4, "effects": {"E1": 5, "E2": 3}},
+  {"id": "M7", "name": "Школа + детсад", "description": "Модульное строительство социальной инфраструктуры в районе.", "category": "social", "scope": "district", "cost": 24, "lag": 3, "effects": {"S1": 16}},
+  {"id": "M8", "name": "Центр семейного здоровья / поликлиника", "description": "Расширение доступности первичной медицинской помощи.", "category": "social", "scope": "district", "cost": 20, "lag": 3, "effects": {"S2": 14}},
+  {"id": "M9", "name": "Дворовые спорт-хабы", "description": "Спортивные пространства во дворах выбранного района.", "category": "social", "scope": "district", "cost": 10, "lag": 1, "effects": {"S1": 3, "S2": 3, "B1": 3}},
+  {"id": "M10", "name": "Освещение и камеры", "description": "Расширение Safe City: освещение и камеры в районе.", "category": "safety", "scope": "district", "cost": 12, "lag": 1, "effects": {"B1": 12, "B2": 2}},
+  {"id": "M11", "name": "Безопасные переходы и школьные зоны", "description": "Повышение дорожной безопасности с небольшим снижением разгрузки дорог.", "category": "safety", "scope": "district", "cost": 10, "lag": 1, "effects": {"B2": 12, "T1": -2}},
+  {"id": "M12", "name": "Единая цифровая платформа обращений", "description": "Ускорение обработки обращений жителей во всём городе.", "category": "services", "scope": "city", "cost": 14, "lag": 1, "effects": {"C2": 5}},
+  {"id": "M13", "name": "Модернизация тепло- и водосетей", "description": "Обновление коммунальных сетей выбранного района.", "category": "services", "scope": "district", "cost": 28, "lag": 4, "effects": {"C1": 18, "E2": 2}},
+  {"id": "M14", "name": "Аварийные бригады ЖКХ + раннее оповещение", "description": "Городская система быстрого реагирования на коммунальные аварии.", "category": "services", "scope": "city", "cost": 16, "lag": 1, "effects": {"C1": 5, "C2": 2}}
 ]

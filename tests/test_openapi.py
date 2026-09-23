@@ -5,6 +5,11 @@ def test_required_paths_are_documented(client: TestClient) -> None:
     paths = client.get("/openapi.json").json()["paths"]
 
     assert {
+        "/api/bootstrap",
+        "/api/simulate",
+        "/api/validate",
+        "/api/config",
+        "/api/health",
         "/api/v1/districts",
         "/api/v1/districts/{district_id}",
         "/api/v1/initiatives",
@@ -13,4 +18,3 @@ def test_required_paths_are_documented(client: TestClient) -> None:
         "/api/v1/ai-analysis",
         "/api/v1/health",
     }.issubset(paths)
-

@@ -1,0 +1,475 @@
+{
+  "scenarioVersion": "reference-v1",
+  "datasetVersion": "astana-synthetic-v1",
+  "decisions": [
+    {
+      "initiativeId": "M5",
+      "districtId": "saryarka",
+      "name": "Перевод частного сектора на чистое топливо",
+      "category": "ecology",
+      "scope": "district",
+      "cost": 25,
+      "districtName": "Сарыарка"
+    },
+    {
+      "initiativeId": "M7",
+      "districtId": "nura",
+      "name": "Школа + детсад",
+      "category": "social",
+      "scope": "district",
+      "cost": 24,
+      "districtName": "Нура"
+    },
+    {
+      "initiativeId": "M8",
+      "districtId": "nura",
+      "name": "Центр семейного здоровья / поликлиника",
+      "category": "social",
+      "scope": "district",
+      "cost": 20,
+      "districtName": "Нура"
+    },
+    {
+      "initiativeId": "M10",
+      "districtId": "nura",
+      "name": "Освещение и камеры",
+      "category": "safety",
+      "scope": "district",
+      "cost": 12,
+      "districtName": "Нура"
+    },
+    {
+      "initiativeId": "M12",
+      "districtId": null,
+      "name": "Единая цифровая платформа обращений",
+      "category": "services",
+      "scope": "city",
+      "cost": 14,
+      "districtName": "Весь город"
+    }
+  ],
+  "budget": {
+    "limit": 100,
+    "spent": 95,
+    "remaining": 5
+  },
+  "baseline": {
+    "score": 52.55768,
+    "averageScore": 56.8624,
+    "minimumScore": 49.18,
+    "weakestDistrictId": "nura",
+    "criticalCount": 2,
+    "criticalIndicators": [
+      {
+        "districtId": "nura",
+        "indicator": "S1",
+        "value": 38.0
+      },
+      {
+        "districtId": "nura",
+        "indicator": "S2",
+        "value": 35.0
+      }
+    ],
+    "districts": [
+      {
+        "id": "esil",
+        "name": "Есиль",
+        "populationShare": 0.27,
+        "profile": "",
+        "indicators": {
+          "T1": 45.0,
+          "T2": 62.0,
+          "E1": 68.0,
+          "E2": 72.0,
+          "S1": 48.0,
+          "S2": 55.0,
+          "B1": 78.0,
+          "B2": 60.0,
+          "C1": 75.0,
+          "C2": 70.0
+        },
+        "score": 62.99,
+        "categories": {
+          "transport": 53.49999999999999,
+          "ecology": 70.19999999999999,
+          "social": 51.5,
+          "safety": 68.99999999999999,
+          "services": 72.5
+        }
+      },
+      {
+        "id": "almaty",
+        "name": "Алматы",
+        "populationShare": 0.24,
+        "profile": "",
+        "indicators": {
+          "T1": 40.0,
+          "T2": 75.0,
+          "E1": 50.0,
+          "E2": 55.0,
+          "S1": 60.0,
+          "S2": 65.0,
+          "B1": 62.0,
+          "B2": 52.0,
+          "C1": 50.0,
+          "C2": 60.0
+        },
+        "score": 57.06,
+        "categories": {
+          "transport": 57.5,
+          "ecology": 52.75,
+          "social": 62.5,
+          "safety": 57.0,
+          "services": 55.0
+        }
+      },
+      {
+        "id": "saryarka",
+        "name": "Сарыарка",
+        "populationShare": 0.2,
+        "profile": "",
+        "indicators": {
+          "T1": 50.0,
+          "T2": 70.0,
+          "E1": 42.0,
+          "E2": 40.0,
+          "S1": 62.0,
+          "S2": 68.0,
+          "B1": 58.0,
+          "B2": 55.0,
+          "C1": 45.0,
+          "C2": 55.0
+        },
+        "score": 54.65,
+        "categories": {
+          "transport": 60.0,
+          "ecology": 40.9,
+          "social": 65.0,
+          "safety": 56.5,
+          "services": 50.0
+        }
+      },
+      {
+        "id": "baikonur",
+        "name": "Байконур",
+        "populationShare": 0.13,
+        "profile": "",
+        "indicators": {
+          "T1": 52.0,
+          "T2": 68.0,
+          "E1": 55.0,
+          "E2": 50.0,
+          "S1": 58.0,
+          "S2": 60.0,
+          "B1": 52.0,
+          "B2": 58.0,
+          "C1": 55.0,
+          "C2": 58.0
+        },
+        "score": 56.63,
+        "categories": {
+          "transport": 60.0,
+          "ecology": 52.24999999999999,
+          "social": 59.0,
+          "safety": 54.99999999999999,
+          "services": 56.5
+        }
+      },
+      {
+        "id": "nura",
+        "name": "Нура",
+        "populationShare": 0.16,
+        "profile": "",
+        "indicators": {
+          "T1": 55.0,
+          "T2": 40.0,
+          "E1": 45.0,
+          "E2": 65.0,
+          "S1": 38.0,
+          "S2": 35.0,
+          "B1": 55.0,
+          "B2": 50.0,
+          "C1": 60.0,
+          "C2": 50.0
+        },
+        "score": 49.18,
+        "categories": {
+          "transport": 47.5,
+          "ecology": 55.99999999999999,
+          "social": 36.5,
+          "safety": 52.5,
+          "services": 55.0
+        }
+      }
+    ]
+  },
+  "result": {
+    "score": 56.54307,
+    "averageScore": 58.077600000000004,
+    "minimumScore": 52.9625,
+    "weakestDistrictId": "nura",
+    "criticalCount": 0,
+    "criticalIndicators": [],
+    "districts": [
+      {
+        "id": "esil",
+        "name": "Есиль",
+        "populationShare": 0.27,
+        "profile": "",
+        "indicators": {
+          "T1": 45.0,
+          "T2": 62.0,
+          "E1": 68.0,
+          "E2": 72.0,
+          "S1": 48.0,
+          "S2": 55.0,
+          "B1": 78.0,
+          "B2": 60.0,
+          "C1": 75.0,
+          "C2": 74.375
+        },
+        "score": 63.4275,
+        "categories": {
+          "transport": 53.49999999999999,
+          "ecology": 70.19999999999999,
+          "social": 51.5,
+          "safety": 68.99999999999999,
+          "services": 74.6875
+        }
+      },
+      {
+        "id": "almaty",
+        "name": "Алматы",
+        "populationShare": 0.24,
+        "profile": "",
+        "indicators": {
+          "T1": 40.0,
+          "T2": 75.0,
+          "E1": 50.0,
+          "E2": 55.0,
+          "S1": 60.0,
+          "S2": 65.0,
+          "B1": 62.0,
+          "B2": 52.0,
+          "C1": 50.0,
+          "C2": 64.375
+        },
+        "score": 57.4975,
+        "categories": {
+          "transport": 57.5,
+          "ecology": 52.75,
+          "social": 62.5,
+          "safety": 57.0,
+          "services": 57.1875
+        }
+      },
+      {
+        "id": "saryarka",
+        "name": "Сарыарка",
+        "populationShare": 0.2,
+        "profile": "",
+        "indicators": {
+          "T1": 50.0,
+          "T2": 70.0,
+          "E1": 42.0,
+          "E2": 48.75,
+          "S1": 62.0,
+          "S2": 68.0,
+          "B1": 58.0,
+          "B2": 55.0,
+          "C1": 47.5,
+          "C2": 59.375
+        },
+        "score": 56.3,
+        "categories": {
+          "transport": 60.0,
+          "ecology": 45.7125,
+          "social": 65.0,
+          "safety": 56.5,
+          "services": 53.4375
+        }
+      },
+      {
+        "id": "baikonur",
+        "name": "Байконур",
+        "populationShare": 0.13,
+        "profile": "",
+        "indicators": {
+          "T1": 52.0,
+          "T2": 68.0,
+          "E1": 55.0,
+          "E2": 50.0,
+          "S1": 58.0,
+          "S2": 60.0,
+          "B1": 52.0,
+          "B2": 58.0,
+          "C1": 55.0,
+          "C2": 62.375
+        },
+        "score": 57.0675,
+        "categories": {
+          "transport": 60.0,
+          "ecology": 52.24999999999999,
+          "social": 59.0,
+          "safety": 54.99999999999999,
+          "services": 58.6875
+        }
+      },
+      {
+        "id": "nura",
+        "name": "Нура",
+        "populationShare": 0.16,
+        "profile": "",
+        "indicators": {
+          "T1": 55.0,
+          "T2": 40.0,
+          "E1": 45.0,
+          "E2": 65.0,
+          "S1": 48.0,
+          "S2": 43.75,
+          "B1": 67.5,
+          "B2": 51.75,
+          "C1": 60.0,
+          "C2": 54.375
+        },
+        "score": 52.9625,
+        "categories": {
+          "transport": 47.5,
+          "ecology": 55.99999999999999,
+          "social": 45.87500000000001,
+          "safety": 59.625,
+          "services": 57.1875
+        }
+      }
+    ]
+  },
+  "scoreChange": 3.9853900000000024,
+  "scoreBreakdown": {
+    "before": {
+      "averageScore": 56.8624,
+      "minimumScore": 49.18,
+      "criticalCount": 2,
+      "weightedAverage": 39.80368,
+      "weightedMinimum": 14.754,
+      "penalty": 2.0
+    },
+    "after": {
+      "averageScore": 58.077600000000004,
+      "minimumScore": 52.9625,
+      "criticalCount": 0,
+      "weightedAverage": 40.65432,
+      "weightedMinimum": 15.888749999999998,
+      "penalty": 0.0
+    }
+  },
+  "effects": [
+    {
+      "initiativeId": "M5",
+      "districtId": "saryarka",
+      "name": "Перевод частного сектора на чистое топливо",
+      "scope": "district",
+      "lag": 3,
+      "factor": 0.625,
+      "targets": [
+        "saryarka"
+      ],
+      "fullEffects": {
+        "E2": 14.0,
+        "C1": 4.0
+      },
+      "realizedEffects": {
+        "E2": 8.75,
+        "C1": 2.5
+      }
+    },
+    {
+      "initiativeId": "M7",
+      "districtId": "nura",
+      "name": "Школа + детсад",
+      "scope": "district",
+      "lag": 3,
+      "factor": 0.625,
+      "targets": [
+        "nura"
+      ],
+      "fullEffects": {
+        "S1": 16.0
+      },
+      "realizedEffects": {
+        "S1": 10.0
+      }
+    },
+    {
+      "initiativeId": "M8",
+      "districtId": "nura",
+      "name": "Центр семейного здоровья / поликлиника",
+      "scope": "district",
+      "lag": 3,
+      "factor": 0.625,
+      "targets": [
+        "nura"
+      ],
+      "fullEffects": {
+        "S2": 14.0
+      },
+      "realizedEffects": {
+        "S2": 8.75
+      }
+    },
+    {
+      "initiativeId": "M10",
+      "districtId": "nura",
+      "name": "Освещение и камеры",
+      "scope": "district",
+      "lag": 1,
+      "factor": 0.875,
+      "targets": [
+        "nura"
+      ],
+      "fullEffects": {
+        "B1": 12.0,
+        "B2": 2.0
+      },
+      "realizedEffects": {
+        "B1": 10.5,
+        "B2": 1.75
+      }
+    },
+    {
+      "initiativeId": "M12",
+      "districtId": null,
+      "name": "Единая цифровая платформа обращений",
+      "scope": "city",
+      "lag": 1,
+      "factor": 0.875,
+      "targets": [
+        "esil",
+        "almaty",
+        "saryarka",
+        "baikonur",
+        "nura"
+      ],
+      "fullEffects": {
+        "C2": 5.0
+      },
+      "realizedEffects": {
+        "C2": 4.375
+      }
+    }
+  ],
+  "synergies": [
+    {
+      "id": "M10_M12",
+      "initiatives": [
+        "M10",
+        "M12"
+      ],
+      "targetInitiative": "M10",
+      "districtId": "nura",
+      "effects": {
+        "B1": 2.0
+      }
+    }
+  ]
+}

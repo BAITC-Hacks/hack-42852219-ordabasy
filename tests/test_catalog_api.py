@@ -17,9 +17,11 @@ def test_list_and_get_districts(client: TestClient) -> None:
     district_response = client.get("/api/v1/districts/esil")
 
     assert list_response.status_code == 200
-    assert len(list_response.json()) == 6
+    assert len(list_response.json()) == 5
     assert district_response.status_code == 200
-    assert district_response.json()["name"] == "Есіл"
+    assert district_response.json()["name"] == "Есиль"
+    assert district_response.json()["populationShare"] == 0.27
+    assert district_response.json()["indicators"]["T1"] == 45
 
 
 def test_unknown_district_uses_central_error_format(client: TestClient) -> None:
@@ -33,7 +35,7 @@ def test_list_initiatives(client: TestClient) -> None:
     response = client.get("/api/v1/initiatives")
 
     assert response.status_code == 200
-    assert len(response.json()) == 10
+    assert len(response.json()) == 14
 
 
 def test_cors_allows_nextjs_origin(client: TestClient) -> None:

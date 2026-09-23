@@ -1,4 +1,6 @@
 .env
+.env.*
+!.env.example
 .venv/
 __pycache__/
 *.py[cod]
@@ -7,4 +9,7 @@ __pycache__/
 htmlcov/
 .mypy_cache/
 .ruff_cache/
-
+*.egg-info/
+build/
+dist/
+node_modules/

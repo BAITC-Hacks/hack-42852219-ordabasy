@@ -1,0 +1,10 @@
+{
+  "scenarioVersion": "reference-v1",
+  "decisions": [
+    {"initiativeId": "M7", "districtId": "nura"},
+    {"initiativeId": "M8", "districtId": "nura"},
+    {"initiativeId": "M10", "districtId": "nura"},
+    {"initiativeId": "M12", "districtId": null},
+    {"initiativeId": "M5", "districtId": "saryarka"}
+  ]
+}

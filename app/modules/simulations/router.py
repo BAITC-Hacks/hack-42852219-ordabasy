@@ -4,9 +4,10 @@ from fastapi import APIRouter, Depends
 
 from app.modules.simulations.dependencies import get_simulation_service
 from app.modules.simulations.schemas import (
-    SimulationRequest,
+    ScenarioRequest,
     SimulationResult,
     SimulationValidation,
+    ValidationRequest,
 )
 from app.modules.simulations.service import SimulationService
 
@@ -20,9 +21,9 @@ SimulationServiceDep = Annotated[SimulationService, Depends(get_simulation_servi
     summary="Validate simulation choices",
 )
 def validate_simulation(
-    request: SimulationRequest, service: SimulationServiceDep
+    request: ValidationRequest, service: SimulationServiceDep
 ) -> SimulationValidation:
-    return service.validate(request)
+    return service.validate(request, final=request.final)
 
 
 @router.post(
@@ -31,6 +32,6 @@ def validate_simulation(
     summary="Calculate the Astana Quality of Life Score",
 )
 def calculate_simulation(
-    request: SimulationRequest, service: SimulationServiceDep
+    request: ScenarioRequest, service: SimulationServiceDep
 ) -> SimulationResult:
     return service.calculate(request)

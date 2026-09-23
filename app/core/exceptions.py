@@ -37,9 +37,9 @@ class NotFoundError(AppError):
 
 
 class SimulationValidationError(AppError):
-    def __init__(self, errors: list[str]) -> None:
+    def __init__(self, errors: list[dict[str, Any]]) -> None:
         super().__init__(
-            "Simulation choices are invalid",
+            "Проверьте выбранные решения перед запуском симуляции.",
             code="simulation_validation_error",
             status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
             details={"errors": errors},
@@ -77,7 +77,11 @@ def register_exception_handlers(app: FastAPI) -> None:
             content=_error_body(
                 "request_validation_error",
                 "Request data is invalid",
-                jsonable_encoder(exc.errors()),
+                jsonable_encoder([
+                    {key: value for key, value in error.items()
+                     if key not in {"input", "ctx"}}
+                    for error in exc.errors()
+                ]),
             ),
         )
 
