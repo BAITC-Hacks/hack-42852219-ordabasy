@@ -1,0 +1,33 @@
+---
+description: Explicit TypeScript types, no any or suppressed errors
+globs: "**/*.{ts,tsx}"
+alwaysApply: false
+---
+
+# TypeScript
+
+Do not use `any`, `Record<string, any>`, or `@ts-ignore`.
+
+Prefer a named domain type for each request and response:
+
+```ts
+interface AnalyzeDocumentRequest {
+  documentId: string;
+  prompt: string;
+}
+
+interface AnalyzeDocumentResponse {
+  id: string;
+  summary: string;
+  confidence: number;
+  createdAt: string;
+}
+
+async function analyzeDocument(
+  payload: AnalyzeDocumentRequest,
+): Promise<AnalyzeDocumentResponse> {
+  return apiClient.post("/analyze", payload);
+}
+```
+
+Do not suppress TypeScript errors. Fix the type or narrow it.
