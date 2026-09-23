@@ -1,0 +1,19 @@
+---
+description: Server Components by default and focused React state
+globs: "**/*.{ts,tsx}"
+alwaysApply: false
+---
+
+# React
+
+Server Components are the default. Add `"use client"` only for state, events, or browser APIs, on the smallest interactive component.
+
+Do not store derived values in state. Avoid `useEffect` when render or an event handler can do the work.
+
+Split state by kind:
+
+- Server data stays in the query layer, and only if a query library is already a real need.
+- Shared client UI state uses a small store, not one store for the whole app.
+- `isOpen`, input value, and the active tab stay in `useState`.
+
+A component does one job. A page composes widgets and features. It does not fetch, own business rules, and render a large tree in the same file.
